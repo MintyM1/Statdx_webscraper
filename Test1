@@ -1,0 +1,27 @@
+import time, selenium
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+driver = webdriver.Chrome(r"C:\Users\Minty\Downloads\Python\Python.files\chromedriver.exe")
+url = 'https://app.statdx.com/'
+driver.get(url)
+
+driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div[1]/form/div[1]/input').send_keys('username')
+driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div[1]/form/div[2]/div/input').send_keys('password')
+driver.find_element_by_xpath('//*[@id="content"]/div/div[1]/div[1]/form/div[4]/button').click()
+
+time.sleep(5)
+
+url_scrape = 'https://app.statdx.com/document/coronavirus/db322a0d-c435-481c-9c8d-87e981360705'
+driver.get(url_scrape)
+
+time.sleep(2)
+
+driver.find_element_by_xpath('//*[@id="fsrFocusFirst"]/svg').click()
+
+pictures = driver.find_elements_by_class_name('imagePartialSelector')
+
+for picture in pictures:
+    comment = picture.find_element_by_xpath('./html/body/div[1]/div[3]/div[2]/div[4]/div[2]/div/div/div[4]/div/div[1]/div[2]/div[2]/div[3]/div[3]/text()[1]').text
+    print(comment)
+time.sleep(100)
